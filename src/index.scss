@@ -1,0 +1,10 @@
+// Libs
+@import 'libs/styles/reset';
+
+// Basic
+@import 'basic/styles/basic';
+
+// Components
+@import 'components/faceDetection/faceDetection';
+@import 'components/game/game';
+@import 'components/enableCamera/enableCamera';

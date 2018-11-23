@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  {% include "links&Metas.html" %}
+  <title> Bulbo Distroer 3000 </title>
+  <link rel="stylesheet" href="assets_builded/styles/index.css">
+</head>
+<body>
+  <div class="app">
+    {% include "faceDetection.html" %}
+    {% include "game.html" %}
+  </div>
+
+  <div class="popups">
+    {% include "enableCamera.html" %}
+  </div>
+
+  <script src="assets_static/scripts/clmtrackr.min.js"> </script>
+  <script src="//cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.min.js"></script>
+  <script src="assets_builded/scripts/index.js"> </script>
+</body>
+</html>

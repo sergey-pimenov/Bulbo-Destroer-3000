@@ -1,0 +1,42 @@
+.faceDetection {
+  margin: 20px 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  position : relative;
+  z-index: 1;
+
+  .overlay {
+    transform : scaleX(-1);
+  }
+
+  .video {
+    transform : scaleX(-1);
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .browsOverlay {
+    width: 269px;
+    height: 202px;
+    // border: 2px solid yellow;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform : scaleX(-1);
+  }
+
+  .start {
+    margin-top: 2px;
+    padding: 12px 25px;
+    left: 20px;
+    top: 235px;
+    background-color: black;
+    color: white;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
