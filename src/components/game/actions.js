@@ -1,19 +1,21 @@
 import scores from './../scores/scores';
 
 var actions = {
-  collectBulbo(player, bulbo) {
+  handleBulbo(player, bulbo) {
     scores.collectBulbo();
     bulbo.destroy();
   },
 
-  collectProkopenia(player, bonus) {
+  handleProkopenia(player, bonus) {
     scores.collectProkopenia();
     bonus.destroy();
+    actions.grow();
   },
 
-  collectSoloduha(player, bonus) {
+  handleSoloduha(player, bonus) {
     scores.collectSoloduha();
     bonus.destroy();
+    actions.grow();
   },
 
   jump() {
@@ -25,6 +27,15 @@ var actions = {
           return Math.pow(Math.sin(t * 3), 3);
       }
   });
+  },
+
+  grow() {
+    context.tweens.add({
+      targets: player,
+      scaleX: '+=.1',
+      scaleY: '+=.1',
+      duration: 700
+   });
   }
 }
 

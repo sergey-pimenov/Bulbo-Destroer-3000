@@ -65,7 +65,7 @@ var create = {
         potato.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, potato, actions.collectBulbo, null, context);
+      context.physics.add.overlap(player, potato, actions.handleBulbo, null, context);
     }, 500);
   },
 
@@ -85,7 +85,7 @@ var create = {
         soloduha.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, soloduha, actions.collectSoloduha, null, context);
+      context.physics.add.overlap(player, soloduha, actions.handleSoloduha, null, context);
     }, 3000);
   },
 
@@ -105,7 +105,7 @@ var create = {
         prokopenia.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, prokopenia, actions.collectProkopenia, null, context);
+      context.physics.add.overlap(player, prokopenia, actions.handleProkopenia, null, context);
     }, 3000);
   }
 }

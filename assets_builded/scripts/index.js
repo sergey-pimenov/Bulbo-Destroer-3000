@@ -109,17 +109,19 @@ var _scores2 = _interopRequireDefault(_scores);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var actions = {
-  collectBulbo: function collectBulbo(player, bulbo) {
+  handleBulbo: function handleBulbo(player, bulbo) {
     _scores2.default.collectBulbo();
     bulbo.destroy();
   },
-  collectProkopenia: function collectProkopenia(player, bonus) {
+  handleProkopenia: function handleProkopenia(player, bonus) {
     _scores2.default.collectProkopenia();
     bonus.destroy();
+    actions.grow();
   },
-  collectSoloduha: function collectSoloduha(player, bonus) {
+  handleSoloduha: function handleSoloduha(player, bonus) {
     _scores2.default.collectSoloduha();
     bonus.destroy();
+    actions.grow();
   },
   jump: function jump() {
     context.tweens.add({
@@ -129,6 +131,14 @@ var actions = {
       ease: function ease(t) {
         return Math.pow(Math.sin(t * 3), 3);
       }
+    });
+  },
+  grow: function grow() {
+    context.tweens.add({
+      targets: player,
+      scaleX: '+=.1',
+      scaleY: '+=.1',
+      duration: 700
     });
   }
 };
@@ -562,7 +572,7 @@ var create = {
         potato.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, potato, _actions2.default.collectBulbo, null, context);
+      context.physics.add.overlap(player, potato, _actions2.default.handleBulbo, null, context);
     }, 500);
   },
   soloduhas: function soloduhas() {
@@ -581,7 +591,7 @@ var create = {
         soloduha.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, soloduha, _actions2.default.collectSoloduha, null, context);
+      context.physics.add.overlap(player, soloduha, _actions2.default.handleSoloduha, null, context);
     }, 3000);
   },
   prokopenias: function prokopenias() {
@@ -600,7 +610,7 @@ var create = {
         prokopenia.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, prokopenia, _actions2.default.collectProkopenia, null, context);
+      context.physics.add.overlap(player, prokopenia, _actions2.default.handleProkopenia, null, context);
     }, 3000);
   }
 };
