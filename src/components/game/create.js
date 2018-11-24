@@ -8,7 +8,6 @@ window.bottomBorder = null;
 window.cursors = null;
 window.bg = null;
 window.stars = null;
-window.bg = null;
 window.context = null;
 
 var create = {
@@ -66,8 +65,48 @@ var create = {
         potato.destroy();
       }, 5200);
 
-      context.physics.add.overlap(player, potato, actions.collectStar, null, context);
+      context.physics.add.overlap(player, potato, actions.collectBulbo, null, context);
     }, 500);
+  },
+
+  soloduhas() {
+    setInterval(() => {
+      if(state.paused) return;
+
+      var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
+      var y = 30;
+
+      var soloduha = context.physics.add.image(x, y, 'soloduha');
+      
+      context.physics.moveTo(soloduha, x, 300, 300);
+
+      setTimeout(() => {
+        if(state.paused) return;
+        soloduha.destroy();
+      }, 5200);
+
+      context.physics.add.overlap(player, soloduha, actions.collectSoloduha, null, context);
+    }, 3000);
+  },
+
+  prokopenias() {
+    setInterval(() => {
+      if(state.paused) return;
+
+      var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
+      var y = 30;
+
+      var prokopenia = context.physics.add.image(x, y, 'prokopenia');
+      
+      context.physics.moveTo(prokopenia, x, 300, 300);
+
+      setTimeout(() => {
+        if(state.paused) return;
+        prokopenia.destroy();
+      }, 5200);
+
+      context.physics.add.overlap(player, prokopenia, actions.collectProkopenia, null, context);
+    }, 3000);
   }
 }
 

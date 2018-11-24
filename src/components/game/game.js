@@ -26,8 +26,11 @@ export default function() {
   window.game = new Phaser.Game(config);
 
   create.popatos();
+  create.soloduhas();
 
-  function collectStar(player, star) {
+  setTimeout(create.prokopenias, 1500);
+
+  function collectBulbo(player, star) {
     console.log('11')
     star.disableBody(true, true);
   }
@@ -36,11 +39,11 @@ export default function() {
     star.destroy();
   }
 
-  function funcsetListeners() {
+  function setListeners() {
     pauseAndResumeNode.addEventListener('click', pauseOrResumeGame);
   }
 
-  funcsetListeners();
+  setListeners();
 
   function pauseOrResumeGame() {
     if(!state.paused) {

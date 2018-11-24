@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,12 +73,23 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var state = {
   faceDetectionReady: false,
   gameStarted: false,
   paused: false,
-  mouseOpened: false
+  mouseOpened: false,
+
+  scores: {
+    bulbas: 0,
+    prokopenias: 0,
+    soloduhas: 0
+  }
 };
+
+exports.default = state;
 
 /***/ }),
 /* 1 */
@@ -90,10 +101,25 @@ var state = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _scores = __webpack_require__(11);
+
+var _scores2 = _interopRequireDefault(_scores);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var actions = {
-  collectStar: function collectStar(player, star) {
-    console.log('11');
-    star.disableBody(true, true);
+  collectBulbo: function collectBulbo(player, bulbo) {
+    _scores2.default.collectBulbo();
+    bulbo.destroy();
+  },
+  collectProkopenia: function collectProkopenia(player, bonus) {
+    _scores2.default.collectProkopenia();
+    bonus.destroy();
+  },
+  collectSoloduha: function collectSoloduha(player, bonus) {
+    _scores2.default.collectSoloduha();
+    bonus.destroy();
   },
   jump: function jump() {
     context.tweens.add({
@@ -258,8 +284,11 @@ exports.default = function () {
   window.game = new Phaser.Game(config);
 
   _create2.default.popatos();
+  _create2.default.soloduhas();
 
-  function collectStar(player, star) {
+  setTimeout(_create2.default.prokopenias, 1500);
+
+  function collectBulbo(player, star) {
     console.log('11');
     star.disableBody(true, true);
   }
@@ -268,11 +297,11 @@ exports.default = function () {
     star.destroy();
   }
 
-  function funcsetListeners() {
+  function setListeners() {
     pauseAndResumeNode.addEventListener('click', pauseOrResumeGame);
   }
 
-  funcsetListeners();
+  setListeners();
 
   function pauseOrResumeGame() {
     if (!_state2.default.paused) {
@@ -455,10 +484,10 @@ exports.default = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
-var _randomInt = __webpack_require__(12);
+var _randomInt = __webpack_require__(13);
 
 var _randomInt2 = _interopRequireDefault(_randomInt);
 
@@ -478,65 +507,102 @@ window.bottomBorder = null;
 window.cursors = null;
 window.bg = null;
 window.stars = null;
-window.bg = null;
 window.context = null;
 
 var create = {
-    baseScene: function baseScene() {
-        var docBottom = document.body.getBoundingClientRect().bottom;
-        var docCenter = document.body.getBoundingClientRect().width / 2;
+  baseScene: function baseScene() {
+    var docBottom = document.body.getBoundingClientRect().bottom;
+    var docCenter = document.body.getBoundingClientRect().width / 2;
 
-        bg = this.add.tileSprite(0, 0, document.body.getBoundingClientRect().width, document.body.getBoundingClientRect().height, 'ground').setOrigin(0, 0);
+    bg = this.add.tileSprite(0, 0, document.body.getBoundingClientRect().width, document.body.getBoundingClientRect().height, 'ground').setOrigin(0, 0);
 
-        platforms = this.physics.add.staticGroup();
-        bottomBorder = this.physics.add.staticGroup();
+    platforms = this.physics.add.staticGroup();
+    bottomBorder = this.physics.add.staticGroup();
 
-        bottomBorder.create(0, docBottom + 50, 'platform').setScale(3, 1).refreshBody();
+    bottomBorder.create(0, docBottom + 50, 'platform').setScale(3, 1).refreshBody();
 
-        var config = {
-            key: 'bee',
-            frames: this.anims.generateFrameNumbers('bee', {
-                start: 0,
-                end: 24
-            }),
-            repeat: -1,
-            frameRate: 48
-        };
+    var config = {
+      key: 'bee',
+      frames: this.anims.generateFrameNumbers('bee', {
+        start: 0,
+        end: 24
+      }),
+      repeat: -1,
+      frameRate: 48
+    };
 
-        this.anims.create(config);
+    this.anims.create(config);
 
-        player = this.physics.add.sprite(docCenter, docBottom, 'bee');
+    player = this.physics.add.sprite(docCenter, docBottom, 'bee');
 
-        player.anims.play('bee');
+    player.anims.play('bee');
 
-        player.setBounce(0.01);
-        player.setCollideWorldBounds(true);
+    player.setBounce(0.01);
+    player.setCollideWorldBounds(true);
 
-        cursors = this.input.keyboard.createCursorKeys();
+    cursors = this.input.keyboard.createCursorKeys();
 
-        this.physics.add.collider(player, platforms);
+    this.physics.add.collider(player, platforms);
 
-        context = this;
-    },
-    popatos: function popatos() {
-        setInterval(function () {
-            if (_state2.default.paused) return;
+    context = this;
+  },
+  popatos: function popatos() {
+    setInterval(function () {
+      if (_state2.default.paused) return;
 
-            var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
-            var y = 30;
+      var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
+      var y = 30;
 
-            var potato = context.physics.add.image(x, y, 'potato');
+      var potato = context.physics.add.image(x, y, 'potato');
 
-            context.physics.moveTo(potato, x, 300, 300);
+      context.physics.moveTo(potato, x, 300, 300);
 
-            setTimeout(function () {
-                if (_state2.default.paused) return;
-                potato.destroy();
-            }, 5200);
+      setTimeout(function () {
+        if (_state2.default.paused) return;
+        potato.destroy();
+      }, 5200);
 
-            context.physics.add.overlap(player, potato, _actions2.default.collectStar, null, context);
-        }, 500);
-    }
+      context.physics.add.overlap(player, potato, _actions2.default.collectBulbo, null, context);
+    }, 500);
+  },
+  soloduhas: function soloduhas() {
+    setInterval(function () {
+      if (_state2.default.paused) return;
+
+      var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
+      var y = 30;
+
+      var soloduha = context.physics.add.image(x, y, 'soloduha');
+
+      context.physics.moveTo(soloduha, x, 300, 300);
+
+      setTimeout(function () {
+        if (_state2.default.paused) return;
+        soloduha.destroy();
+      }, 5200);
+
+      context.physics.add.overlap(player, soloduha, _actions2.default.collectSoloduha, null, context);
+    }, 3000);
+  },
+  prokopenias: function prokopenias() {
+    setInterval(function () {
+      if (_state2.default.paused) return;
+
+      var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
+      var y = 30;
+
+      var prokopenia = context.physics.add.image(x, y, 'prokopenia');
+
+      context.physics.moveTo(prokopenia, x, 300, 300);
+
+      setTimeout(function () {
+        if (_state2.default.paused) return;
+        prokopenia.destroy();
+      }, 5200);
+
+      context.physics.add.overlap(player, prokopenia, _actions2.default.collectProkopenia, null, context);
+    }, 3000);
+  }
 };
 
 exports.default = create;
@@ -555,6 +621,8 @@ exports.default = preload;
 function preload() {
   this.load.image('ground', 'assets_static/images/ground.jpg');
   this.load.image('platform', 'assets_static/images/platform.png');
+  this.load.image('soloduha', 'assets_static/images/soloduha.png');
+  this.load.image('prokopenia', 'assets_static/images/prokopenia.png');
   this.load.image('potato', 'assets_static/images/potato.png');
   this.load.image('beetle', 'assets_static/images/beetle.png');
   this.load.spritesheet('bee', 'assets_static/images/bee.png', { frameWidth: 200, frameHeight: 200, endFrame: 24 });
@@ -583,6 +651,47 @@ function update() {
 
 /***/ }),
 /* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _state = __webpack_require__(0);
+
+var _state2 = _interopRequireDefault(_state);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var bulbaNodes = document.querySelector('.scores .bulbas');
+var prokopeniasNodes = document.querySelector('.scores .prokopenias');
+var soloduhasNodes = document.querySelector('.scores .soloduhas');
+
+var scores = {
+  collectBulbo: function collectBulbo() {
+    _state2.default.scores.bulbas++;
+
+    bulbaNodes.innerHTML = _state2.default.scores.bulbas;
+  },
+  collectProkopenia: function collectProkopenia() {
+    _state2.default.scores.prokopenias++;
+
+    prokopeniasNodes.innerHTML = _state2.default.scores.prokopenias;
+  },
+  collectSoloduha: function collectSoloduha() {
+    _state2.default.scores.soloduhas++;
+
+    soloduhasNodes.innerHTML = _state2.default.scores.soloduhas;
+  }
+};
+
+exports.default = scores;
+
+/***/ }),
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -627,7 +736,7 @@ setInterval(function () {
 }, 100);
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

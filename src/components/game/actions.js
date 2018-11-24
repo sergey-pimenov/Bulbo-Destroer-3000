@@ -1,7 +1,19 @@
+import scores from './../scores/scores';
+
 var actions = {
-  collectStar(player, star) {
-    console.log('11')
-    star.disableBody(true, true);
+  collectBulbo(player, bulbo) {
+    scores.collectBulbo();
+    bulbo.destroy();
+  },
+
+  collectProkopenia(player, bonus) {
+    scores.collectProkopenia();
+    bonus.destroy();
+  },
+
+  collectSoloduha(player, bonus) {
+    scores.collectSoloduha();
+    bonus.destroy();
   },
 
   jump() {
