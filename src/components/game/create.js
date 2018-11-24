@@ -22,9 +22,23 @@ var create = {
     platforms = this.physics.add.staticGroup();
     bottomBorder = this.physics.add.staticGroup();
 
-    bottomBorder.create(0, docBottom, 'platform').setScale(3, 1).refreshBody();
+    bottomBorder.create(0, docBottom + 50, 'platform').setScale(3, 1).refreshBody();
 
-    player = this.physics.add.image(docCenter, docBottom, 'beetle');
+    var config = {
+      key: 'bee',
+      frames: this.anims.generateFrameNumbers('bee', {
+          start: 0,
+          end: 24
+      }),
+      repeat: -1,
+      frameRate: 48
+    };
+
+    this.anims.create(config);
+
+    player = this.physics.add.sprite(docCenter, docBottom, 'bee');
+
+    player.anims.play('bee');
 
     player.setBounce(0.01);
     player.setCollideWorldBounds(true);
@@ -38,6 +52,8 @@ var create = {
 
   popatos() {
     setInterval(() => {
+      if(state.paused) return;
+
       var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
       var y = 30;
 
@@ -46,9 +62,10 @@ var create = {
       context.physics.moveTo(potato, x, 300, 300);
 
       setTimeout(() => {
+        if(state.paused) return;
         potato.destroy();
       }, 5200);
-        
+
       context.physics.add.overlap(player, potato, actions.collectStar, null, context);
     }, 500);
   }

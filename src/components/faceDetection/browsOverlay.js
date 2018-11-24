@@ -30,8 +30,8 @@ var browsOverlay = {
   },
 
   init() {
-    browsOverlay.drawOverlay();
-    browsOverlay.setProportions();
+    // browsOverlay.drawOverlay();
+    // browsOverlay.setProportions();
   }
 }
 

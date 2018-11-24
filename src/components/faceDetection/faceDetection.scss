@@ -26,7 +26,8 @@
     transform : scaleX(-1);
   }
 
-  .start {
+  .start,
+  .pauseAndResume {
     margin-top: 2px;
     padding: 12px 25px;
     left: 20px;
@@ -38,5 +39,19 @@
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
+  }
+
+  .pauseAndResume {
+    display: none;
+  }
+
+  @at-root body.hideStartButton {
+    .start {
+      display: none;
+    }
+
+    .pauseAndResume {
+      display: block;
+    }
   }
 }

@@ -1,7 +1,7 @@
 import getAngle from './getAngle';
 import state from './../../state/state';
 import browsOverlay from './browsOverlay';
-import model from './../../../assets_static/models/model_spca_10_svm.js';
+import detectMouseOpening from './detectMouseOpening';
 
 // Taken from: https://bit.ly/2P8oQQE
 var vid = document.querySelector('.video');
@@ -69,6 +69,7 @@ var faceDetection = {
 
     if(window.facePoints) {
       window.move = getAngle();
+      detectMouseOpening();
     }
   },
 
@@ -76,14 +77,19 @@ var faceDetection = {
     ctrack.init();
 
     window.startVideo = function() {
-      // start video
+      // Start video
       vid.play();
-      // start tracking
+
+      // Start tracking
       ctrack.start(vid);
       state.faceDetectionReady = true;
-      // start loop to draw face
+
+      // Start loop to draw face
       faceDetection.drawLoop();
       browsOverlay.init();
+
+      // Hide start button
+      document.body.classList.add('hideStartButton');
     }
   }
 };
