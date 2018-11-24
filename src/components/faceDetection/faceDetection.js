@@ -41,7 +41,7 @@ var faceDetection = {
       }
     }
 
-    // startVideo()
+    faceDetection.startTracking();
   },
 
   gumFail() {
@@ -73,24 +73,27 @@ var faceDetection = {
     }
   },
 
-  init() {
-    ctrack.init();
+  startTracking() {
+    vid.play();
 
-    window.startVideo = function() {
-      // Start video
-      vid.play();
+    // Start tracking
+    ctrack.start(vid);
 
-      // Start tracking
-      ctrack.start(vid);
+    // Start loop to draw face
+    faceDetection.drawLoop();
+    browsOverlay.init();
+
+    document.body.classList.add('showStartButton');
+  
+    document.querySelector('.start').addEventListener('click', () => {
       state.faceDetectionReady = true;
 
-      // Start loop to draw face
-      faceDetection.drawLoop();
-      browsOverlay.init();
-
-      // Hide start button
       document.body.classList.add('hideStartButton');
-    }
+    });
+  },
+
+  init() {
+    ctrack.init();
   }
 };
 

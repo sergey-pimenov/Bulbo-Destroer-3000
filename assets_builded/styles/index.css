@@ -66,8 +66,7 @@ table {
 
 body {
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial;
-  background-color: white; }
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial; }
 
 html,
 body {
@@ -101,6 +100,23 @@ body {
 .app {
   display: flex; }
 
+.initScreen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0; }
+  .initScreen::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: white url("../../assets_static/images/bg.jpg") no-repeat;
+    background-size: cover;
+    filter: saturate(0.3) brightness(1.3) blur(3px); }
+
 .faceDetection {
   margin: 20px 0 0 20px;
   display: flex;
@@ -114,7 +130,8 @@ body {
     transform: scaleX(-1);
     position: absolute;
     left: 0;
-    top: 0; }
+    top: 0;
+    background-color: grey; }
   .faceDetection .browsOverlay {
     width: 269px;
     height: 202px;
@@ -135,21 +152,32 @@ body {
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
-    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5); }
-  .faceDetection .pauseAndResume {
+    box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.5);
+    display: none;
+    opacity: 0;
+    transform: translateY(-3px); }
+  body.showStartButton .faceDetection .start {
+    display: block;
+    animation: showButton 0.3s 1.5s ease-out forwards; }
+
+@keyframes showButton {
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+  body.hideStartButton .faceDetection .start {
     display: none; }
-  body.hideStartButton .start {
-    display: none; }
-  body.hideStartButton .pauseAndResume {
-    display: block; }
+  body.hideStartButton .faceDetection .pauseAndResume {
+    display: block;
+    animation: showButton 0.1s ease-out forwards; }
 
 .game {
-  width: 100%;
-  height: 100%;
   position: absolute;
   left: 0;
   top: 0;
-  background-color: lightgrey; }
+  background-color: lightgrey;
+  transition: 0.2s filter; }
+  body.blur .game {
+    filter: blur(30px); }
 
 .scores {
   padding: 12px 30px;

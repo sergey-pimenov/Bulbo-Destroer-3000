@@ -1,5 +1,5 @@
 export default function update () {
-  bg.tilePositionY -= 3;
+  bg.tilePositionY -= 6;
 
   if(window.move) {
       player.setVelocityX(40 * window.move);

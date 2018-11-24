@@ -15,6 +15,7 @@
     position: absolute;
     left: 0;
     top: 0;
+    background-color: grey;
   }
 
   .browsOverlay {
@@ -41,19 +42,31 @@
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: -2px 2px 2px rgba(black, 0.5);
-  }
-
-  .pauseAndResume {
     display: none;
+    opacity: 0;
+    transform: translateY(-3px);
   }
 
-  @at-root body.hideStartButton {
+  @at-root body.showStartButton & .start {
+    display: block;
+    animation: showButton 0.3s 1.5s ease-out forwards;
+  }
+
+  @keyframes showButton {
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @at-root body.hideStartButton & {
     .start {
       display: none;
     }
 
     .pauseAndResume {
       display: block;
+      animation: showButton 0.1s ease-out forwards;
     }
   }
 }

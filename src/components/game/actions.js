@@ -18,7 +18,14 @@ var actions = {
     actions.grow();
   },
 
+  handleVodka(player, bonus) {
+    bonus.destroy();
+    actions.blur();
+  },
+
   jump() {
+    if(!context) return;
+
     context.tweens.add({
       targets: player,
       y: 400,
@@ -32,10 +39,18 @@ var actions = {
   grow() {
     context.tweens.add({
       targets: player,
-      scaleX: '+=.1',
-      scaleY: '+=.1',
+      scaleX: '+=.06',
+      scaleY: '+=.06',
       duration: 700
-   });
+    });
+  },
+
+  blur() {
+    document.body.classList.add('blur');
+
+    setTimeout(() => {
+      document.body.classList.remove('blur');
+    }, 7000)
   }
 }
 

@@ -123,7 +123,13 @@ var actions = {
     bonus.destroy();
     actions.grow();
   },
+  handleVodka: function handleVodka(player, bonus) {
+    bonus.destroy();
+    actions.blur();
+  },
   jump: function jump() {
+    if (!context) return;
+
     context.tweens.add({
       targets: player,
       y: 400,
@@ -136,10 +142,17 @@ var actions = {
   grow: function grow() {
     context.tweens.add({
       targets: player,
-      scaleX: '+=.1',
-      scaleY: '+=.1',
+      scaleX: '+=.06',
+      scaleY: '+=.06',
       duration: 700
     });
+  },
+  blur: function blur() {
+    document.body.classList.add('blur');
+
+    setTimeout(function () {
+      document.body.classList.remove('blur');
+    }, 7000);
   }
 };
 
@@ -211,7 +224,7 @@ var faceDetection = {
       }
     };
 
-    // startVideo()
+    faceDetection.startTracking();
   },
   gumFail: function gumFail() {
     document.querySelector('.enableCamera').classList.add('show');
@@ -239,24 +252,26 @@ var faceDetection = {
       (0, _detectMouseOpening2.default)();
     }
   },
-  init: function init() {
-    ctrack.init();
+  startTracking: function startTracking() {
+    vid.play();
 
-    window.startVideo = function () {
-      // Start video
-      vid.play();
+    // Start tracking
+    ctrack.start(vid);
 
-      // Start tracking
-      ctrack.start(vid);
+    // Start loop to draw face
+    faceDetection.drawLoop();
+    _browsOverlay2.default.init();
+
+    document.body.classList.add('showStartButton');
+
+    document.querySelector('.start').addEventListener('click', function () {
       _state2.default.faceDetectionReady = true;
 
-      // Start loop to draw face
-      faceDetection.drawLoop();
-      _browsOverlay2.default.init();
-
-      // Hide start button
       document.body.classList.add('hideStartButton');
-    };
+    });
+  },
+  init: function init() {
+    ctrack.init();
   }
 };
 
@@ -295,6 +310,7 @@ exports.default = function () {
 
   _create2.default.popatos();
   _create2.default.soloduhas();
+  _create2.default.vodka();
 
   setTimeout(_create2.default.prokopenias, 1500);
 
@@ -317,11 +333,11 @@ exports.default = function () {
     if (!_state2.default.paused) {
       game.scene.pause("default");
       _state2.default.paused = true;
-      pauseAndResumeNode.innerHTML = 'Resume';
+      pauseAndResumeNode.innerHTML = 'Прадоўжыць';
     } else {
       game.scene.resume("default");
       _state2.default.paused = false;
-      pauseAndResumeNode.innerHTML = 'Pause';
+      pauseAndResumeNode.innerHTML = 'Паўза';
     }
   }
 };
@@ -440,6 +456,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 exports.default = function () {
+  if (!window.game || !window.game.isRunning) return;
+
   var topMousePoint = facePoints[60][1];
   var bottomMousePoint = facePoints[57][1];
 
@@ -497,6 +515,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _create;
+
 var _randomInt = __webpack_require__(13);
 
 var _randomInt2 = _interopRequireDefault(_randomInt);
@@ -511,6 +531,8 @@ var _state2 = _interopRequireDefault(_state);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 window.player = null;
 window.platforms = null;
 window.bottomBorder = null;
@@ -519,7 +541,7 @@ window.bg = null;
 window.stars = null;
 window.context = null;
 
-var create = {
+var create = (_create = {
   baseScene: function baseScene() {
     var docBottom = document.body.getBoundingClientRect().bottom;
     var docCenter = document.body.getBoundingClientRect().width / 2;
@@ -556,50 +578,12 @@ var create = {
 
     context = this;
   },
-  popatos: function popatos() {
-    setInterval(function () {
-      if (_state2.default.paused) return;
-
-      var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
-
-      var potato = context.physics.add.image(x, y, 'potato');
-
-      context.physics.moveTo(potato, x, 300, 300);
-
-      setTimeout(function () {
-        if (_state2.default.paused) return;
-        potato.destroy();
-      }, 5200);
-
-      context.physics.add.overlap(player, potato, _actions2.default.handleBulbo, null, context);
-    }, 500);
-  },
-  soloduhas: function soloduhas() {
-    setInterval(function () {
-      if (_state2.default.paused) return;
-
-      var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
-
-      var soloduha = context.physics.add.image(x, y, 'soloduha');
-
-      context.physics.moveTo(soloduha, x, 300, 300);
-
-      setTimeout(function () {
-        if (_state2.default.paused) return;
-        soloduha.destroy();
-      }, 5200);
-
-      context.physics.add.overlap(player, soloduha, _actions2.default.handleSoloduha, null, context);
-    }, 3000);
-  },
   prokopenias: function prokopenias() {
     setInterval(function () {
       if (_state2.default.paused) return;
 
       var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
+      var y = -150;
 
       var prokopenia = context.physics.add.image(x, y, 'prokopenia');
 
@@ -612,8 +596,42 @@ var create = {
 
       context.physics.add.overlap(player, prokopenia, _actions2.default.handleProkopenia, null, context);
     }, 3000);
+  },
+  vodka: function vodka() {
+    create.newObject(-150, 'vodka', _actions2.default.handleVodka, 10000);
+  },
+  popatos: function popatos() {
+    create.newObject(-30, 'potato', _actions2.default.handleBulbo, 500);
+  },
+  soloduhas: function soloduhas() {
+    create.newObject(-150, 'soloduha', _actions2.default.handleSoloduha, 3000);
   }
-};
+}, _defineProperty(_create, 'prokopenias', function prokopenias() {
+  create.newObject(-150, 'prokopenia', _actions2.default.handleProkopenia, 3000);
+}), _defineProperty(_create, 'newObject', function newObject() {
+  var yPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -150;
+  var key = arguments[1];
+  var handler = arguments[2];
+  var interval = arguments[3];
+
+  setInterval(function () {
+    if (_state2.default.paused) return;
+
+    var x = (0, _randomInt2.default)(50, document.body.getBoundingClientRect().width - 50);
+    var y = -150;
+
+    var newGameObj = context.physics.add.image(x, y, key);
+
+    context.physics.moveTo(newGameObj, x, 300, 300);
+
+    setTimeout(function () {
+      if (_state2.default.paused) return;
+      newGameObj.destroy();
+    }, 5200);
+
+    context.physics.add.overlap(player, newGameObj, handler, null, context);
+  }, interval);
+}), _create);
 
 exports.default = create;
 
@@ -633,6 +651,7 @@ function preload() {
   this.load.image('platform', 'assets_static/images/platform.png');
   this.load.image('soloduha', 'assets_static/images/soloduha.png');
   this.load.image('prokopenia', 'assets_static/images/prokopenia.png');
+  this.load.image('vodka', 'assets_static/images/vodka.png');
   this.load.image('potato', 'assets_static/images/potato.png');
   this.load.image('beetle', 'assets_static/images/beetle.png');
   this.load.spritesheet('bee', 'assets_static/images/bee.png', { frameWidth: 200, frameHeight: 200, endFrame: 24 });
@@ -650,7 +669,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = update;
 function update() {
-  bg.tilePositionY -= 3;
+  bg.tilePositionY -= 6;
 
   if (window.move) {
     player.setVelocityX(40 * window.move);

@@ -27,6 +27,7 @@ export default function() {
 
   create.popatos();
   create.soloduhas();
+  create.vodka();
 
   setTimeout(create.prokopenias, 1500);
 
@@ -49,12 +50,11 @@ export default function() {
     if(!state.paused) {
       game.scene.pause("default");
       state.paused = true;
-      pauseAndResumeNode.innerHTML = 'Resume';
-      
+      pauseAndResumeNode.innerHTML = 'Прадоўжыць';
     } else {
       game.scene.resume("default")
       state.paused = false;
-      pauseAndResumeNode.innerHTML = 'Pause';
+      pauseAndResumeNode.innerHTML = 'Паўза';
     }
   }
 }

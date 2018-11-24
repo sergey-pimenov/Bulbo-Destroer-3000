@@ -2,6 +2,8 @@ import actions from './../game/actions';
 import state from './../../state/state';
 
 export default function() {
+  if(!window.game || !window.game.isRunning) return;
+
   var topMousePoint = facePoints[60][1];
   var bottomMousePoint = facePoints[57][1];
 

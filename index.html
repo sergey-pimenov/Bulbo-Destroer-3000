@@ -38,6 +38,21 @@
 </head>
 <body>
   <div class="app">
+    <div class="initScreen">
+  <div class="tips">
+    <div> Што рабіць? </div>
+
+    <div class="tip">
+      <div class="title"> Каб рухацца нахіляй галаву налева і направа </div>
+      <div class="instruction"></div>
+    </div>
+
+    <div class="tip">
+      <div class="title"> Каб скакаць шырока адчыняй рот </div>
+      <div class="instruction"></div>
+    </div>
+  </div>
+</div>
     <div class="faceDetection">
   <video class="video" width="300" 
          height="200" preload="auto" 
@@ -47,10 +62,10 @@
   <canvas class="overlay" width="300" height="200"></canvas>
   <canvas class="browsOverlay"></canvas>
 
-  <button class="start" onclick="startVideo()"> Start </button>
-  <button class="pauseAndResume"> Pause </button>
+  <button class="start"> Пачатак </button>
+  <button class="pauseAndResume"> Паўза </button>
 </div>
-    <canvas class="game" width="500px" height="300px"></canvas>
+    <canvas class="game" width="0" height="0"></canvas>
     <div class="scores">
   <div class="scoreWrapper bulbasWrapper">
     <div class="score bulbas"> 0 </div>

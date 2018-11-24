@@ -49,52 +49,12 @@ var create = {
     context = this;
   },
 
-  popatos() {
-    setInterval(() => {
-      if(state.paused) return;
-
-      var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
-
-      var potato = context.physics.add.image(x, y, 'potato');
-      
-      context.physics.moveTo(potato, x, 300, 300);
-
-      setTimeout(() => {
-        if(state.paused) return;
-        potato.destroy();
-      }, 5200);
-
-      context.physics.add.overlap(player, potato, actions.handleBulbo, null, context);
-    }, 500);
-  },
-
-  soloduhas() {
-    setInterval(() => {
-      if(state.paused) return;
-
-      var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
-
-      var soloduha = context.physics.add.image(x, y, 'soloduha');
-      
-      context.physics.moveTo(soloduha, x, 300, 300);
-
-      setTimeout(() => {
-        if(state.paused) return;
-        soloduha.destroy();
-      }, 5200);
-
-      context.physics.add.overlap(player, soloduha, actions.handleSoloduha, null, context);
-    }, 3000);
-  },
-
   prokopenias() {
     setInterval(() => {
       if(state.paused) return;
 
       var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
-      var y = 30;
+      var y = -150;
 
       var prokopenia = context.physics.add.image(x, y, 'prokopenia');
       
@@ -107,7 +67,43 @@ var create = {
 
       context.physics.add.overlap(player, prokopenia, actions.handleProkopenia, null, context);
     }, 3000);
-  }
+  },
+
+  vodka() {
+    create.newObject(-150, 'vodka', actions.handleVodka, 10000);
+  },
+
+  popatos() {
+    create.newObject(-30, 'potato', actions.handleBulbo, 500);
+  },
+
+  soloduhas() {
+    create.newObject(-150, 'soloduha', actions.handleSoloduha, 3000);
+  },
+
+  prokopenias() {
+    create.newObject(-150, 'prokopenia', actions.handleProkopenia, 3000);
+  },
+
+  newObject(yPos = -150, key, handler, interval) {
+    setInterval(() => {
+      if(state.paused) return;
+
+      var x = randomInt(50, document.body.getBoundingClientRect().width - 50);
+      var y = -150;
+
+      var newGameObj = context.physics.add.image(x, y, key);
+      
+      context.physics.moveTo(newGameObj, x, 300, 300);
+
+      setTimeout(() => {
+        if(state.paused) return;
+        newGameObj.destroy();
+      }, 5200);
+
+      context.physics.add.overlap(player, newGameObj, handler, null, context);
+    }, interval);
+  },
 }
 
 export default create;
