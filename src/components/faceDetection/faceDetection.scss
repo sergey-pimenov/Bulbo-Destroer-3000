@@ -7,6 +7,7 @@
 
   .overlay {
     transform : scaleX(-1);
+    box-shadow: 2px 2px 2px rgba(black, 0.5);
   }
 
   .video {
@@ -28,7 +29,7 @@
 
   .start,
   .pauseAndResume {
-    margin-top: 2px;
+    margin-top: 6px;
     padding: 12px 25px;
     left: 20px;
     top: 235px;
@@ -39,6 +40,7 @@
     font-weight: bold;
     text-transform: uppercase;
     cursor: pointer;
+    box-shadow: -2px 2px 2px rgba(black, 0.5);
   }
 
   .pauseAndResume {
