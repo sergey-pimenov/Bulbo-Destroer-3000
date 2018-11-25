@@ -70,7 +70,7 @@ var create = {
   },
 
   vodka() {
-    create.newObject(-150, 'vodka', actions.handleVodka, 20000);
+    create.newObject(-150, 'vodka', actions.handleVodka, 10000);
   },
 
   popatos() {
@@ -78,11 +78,11 @@ var create = {
   },
 
   soloduhas() {
-    create.newObject(-150, 'soloduha', actions.handleSoloduha, 5000);
+    create.newObject(-150, 'soloduha', actions.handleSoloduha, 3000);
   },
 
   prokopenias() {
-    create.newObject(-150, 'prokopenia', actions.handleProkopenia, 5000);
+    create.newObject(-150, 'prokopenia', actions.handleProkopenia, 3000);
   },
 
   newObject(yPos = -150, key, handler, interval) {
