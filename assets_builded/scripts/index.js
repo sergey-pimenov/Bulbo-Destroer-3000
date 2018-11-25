@@ -686,7 +686,7 @@ var create = (_create = {
     }, 5200);
 
     context.physics.add.overlap(player, newGameObj, handler, null, context);
-    context.physics.add.overlap(tractor, newGameObj, _actions2.default.destroyByTractor, null, context);
+    // context.physics.add.overlap(tractor, newGameObj, actions.destroyByTractor, null, context);
   }, interval);
 }), _create);
 
