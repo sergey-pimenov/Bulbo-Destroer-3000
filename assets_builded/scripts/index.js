@@ -206,6 +206,7 @@ var vid = document.querySelector('.video');
 var vid_width = vid.width;
 var vid_height = vid.height;
 var overlay = document.querySelector('.overlay');
+var description = document.querySelector('.faceDetection .description');
 var overlayCC = overlay.getContext('2d');
 var ctrack = new clm.tracker();
 
@@ -216,6 +217,7 @@ var faceDetection = {
     var proportion = vid.videoWidth / vid.videoHeight;
     vid_width = Math.round(vid_height * proportion);
     vid.width = vid_width;
+    description.width = vid_width;
     overlay.width = vid_width;
   },
   gumSuccess: function gumSuccess(stream) {
