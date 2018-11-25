@@ -138,7 +138,7 @@ var actions = {
     context.tweens.add({
       targets: player,
       rotation: 6.28319,
-      duration: 200
+      duration: 150
     });
   },
   jump: function jump() {
@@ -329,6 +329,10 @@ exports.default = function () {
 
   setTimeout(function () {
     _create2.default.tractor();
+
+    setInterval(function () {
+      _create2.default.tractor();
+    }, 12000);
   }, 450);
 
   setTimeout(_create2.default.prokopenias, 1500);
@@ -649,7 +653,7 @@ var create = (_create = {
   tractor = context.physics.add.image(x, y, key);
 
   setTimeout(function () {
-    context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 800);
+    context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 1200);
 
     setTimeout(function () {
       if (_state2.default.paused) return;

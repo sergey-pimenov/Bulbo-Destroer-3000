@@ -35,7 +35,7 @@ var actions = {
     context.tweens.add({
       targets: player,
       rotation: 6.28319,
-      duration: 200
+      duration: 150
     });
   },
 

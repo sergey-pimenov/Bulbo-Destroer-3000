@@ -95,7 +95,7 @@ var create = {
     tractor = context.physics.add.image(x, y, key);
     
     setTimeout(() => {
-      context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 800);
+      context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 1200);
 
       setTimeout(() => {
         if(state.paused) return;

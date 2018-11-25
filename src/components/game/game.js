@@ -31,6 +31,10 @@ export default function() {
 
   setTimeout(() => {
     create.tractor();
+
+    setInterval(() => {
+      create.tractor();
+    }, 12000);
   }, 450);
 
   setTimeout(create.prokopenias, 1500);
