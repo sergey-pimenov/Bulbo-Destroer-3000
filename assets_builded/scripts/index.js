@@ -268,6 +268,7 @@ var faceDetection = {
       _state2.default.faceDetectionReady = true;
 
       document.body.classList.add('hideStartButton');
+      document.body.classList.add('hideInitScreen');
     });
   },
   init: function init() {
@@ -598,16 +599,16 @@ var create = (_create = {
     }, 3000);
   },
   vodka: function vodka() {
-    create.newObject(-150, 'vodka', _actions2.default.handleVodka, 10000);
+    create.newObject(-150, 'vodka', _actions2.default.handleVodka, 20000);
   },
   popatos: function popatos() {
     create.newObject(-30, 'potato', _actions2.default.handleBulbo, 500);
   },
   soloduhas: function soloduhas() {
-    create.newObject(-150, 'soloduha', _actions2.default.handleSoloduha, 3000);
+    create.newObject(-150, 'soloduha', _actions2.default.handleSoloduha, 5000);
   }
 }, _defineProperty(_create, 'prokopenias', function prokopenias() {
-  create.newObject(-150, 'prokopenia', _actions2.default.handleProkopenia, 3000);
+  create.newObject(-150, 'prokopenia', _actions2.default.handleProkopenia, 5000);
 }), _defineProperty(_create, 'newObject', function newObject() {
   var yPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -150;
   var key = arguments[1];

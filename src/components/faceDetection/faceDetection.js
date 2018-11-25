@@ -89,6 +89,7 @@ var faceDetection = {
       state.faceDetectionReady = true;
 
       document.body.classList.add('hideStartButton');
+      document.body.classList.add('hideInitScreen');
     });
   },
 
