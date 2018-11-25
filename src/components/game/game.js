@@ -29,6 +29,10 @@ export default function() {
   create.soloduhas();
   create.vodka();
 
+  setTimeout(() => {
+    create.tractor();
+  }, 450);
+
   setTimeout(create.prokopenias, 1500);
 
   function collectBulbo(player, star) {

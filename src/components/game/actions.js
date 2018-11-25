@@ -23,6 +23,22 @@ var actions = {
     actions.blur();
   },
 
+  destroyByTractor(tractor, objToDestroy) {
+    objToDestroy.destroy();
+  },
+
+  handleTractor(player, tractor) {
+    // player.destroy();
+
+    console.log('Rotate player!')
+
+    context.tweens.add({
+      targets: player,
+      rotation: 6.28319,
+      duration: 200
+    });
+  },
+
   jump() {
     if(!context) return;
 
@@ -33,7 +49,7 @@ var actions = {
       ease: function (t) {
           return Math.pow(Math.sin(t * 3), 3);
       }
-  });
+    });
   },
 
   grow() {

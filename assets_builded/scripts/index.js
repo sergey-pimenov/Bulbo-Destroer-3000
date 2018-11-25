@@ -127,6 +127,20 @@ var actions = {
     bonus.destroy();
     actions.blur();
   },
+  destroyByTractor: function destroyByTractor(tractor, objToDestroy) {
+    objToDestroy.destroy();
+  },
+  handleTractor: function handleTractor(player, tractor) {
+    // player.destroy();
+
+    console.log('Rotate player!');
+
+    context.tweens.add({
+      targets: player,
+      rotation: 6.28319,
+      duration: 200
+    });
+  },
   jump: function jump() {
     if (!context) return;
 
@@ -312,6 +326,10 @@ exports.default = function () {
   _create2.default.popatos();
   _create2.default.soloduhas();
   _create2.default.vodka();
+
+  setTimeout(function () {
+    _create2.default.tractor();
+  }, 450);
 
   setTimeout(_create2.default.prokopenias, 1500);
 
@@ -540,6 +558,7 @@ window.bottomBorder = null;
 window.cursors = null;
 window.bg = null;
 window.stars = null;
+window.tractor = null;
 window.context = null;
 
 var create = (_create = {
@@ -609,7 +628,37 @@ var create = (_create = {
   }
 }, _defineProperty(_create, 'prokopenias', function prokopenias() {
   create.newObject(-150, 'prokopenia', _actions2.default.handleProkopenia, 5000);
-}), _defineProperty(_create, 'newObject', function newObject() {
+}), _defineProperty(_create, 'tractor', function (_tractor) {
+  function tractor() {
+    return _tractor.apply(this, arguments);
+  }
+
+  tractor.toString = function () {
+    return _tractor.toString();
+  };
+
+  return tractor;
+}(function () {
+  var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'tractor';
+
+  if (_state2.default.paused) return;
+
+  var x = -300;
+  var y = document.body.getBoundingClientRect().height - 200;
+
+  tractor = context.physics.add.image(x, y, key);
+
+  setTimeout(function () {
+    context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 800);
+
+    setTimeout(function () {
+      if (_state2.default.paused) return;
+      tractor.destroy();
+    }, 5200);
+  }, 5000);
+
+  context.physics.add.overlap(player, tractor, _actions2.default.handleTractor, null);
+})), _defineProperty(_create, 'newObject', function newObject() {
   var yPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : -150;
   var key = arguments[1];
   var handler = arguments[2];
@@ -631,6 +680,7 @@ var create = (_create = {
     }, 5200);
 
     context.physics.add.overlap(player, newGameObj, handler, null, context);
+    context.physics.add.overlap(tractor, newGameObj, _actions2.default.destroyByTractor, null, context);
   }, interval);
 }), _create);
 
@@ -655,6 +705,7 @@ function preload() {
   this.load.image('vodka', 'assets_static/images/vodka.png');
   this.load.image('potato', 'assets_static/images/potato.png');
   this.load.image('beetle', 'assets_static/images/beetle.png');
+  this.load.image('tractor', 'assets_static/images/tractor.png');
   this.load.spritesheet('bee', 'assets_static/images/bee.png', { frameWidth: 200, frameHeight: 200, endFrame: 24 });
 }
 

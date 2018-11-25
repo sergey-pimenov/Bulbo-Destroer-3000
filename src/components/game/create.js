@@ -8,6 +8,7 @@ window.bottomBorder = null;
 window.cursors = null;
 window.bg = null;
 window.stars = null;
+window.tractor = null;
 window.context = null;
 
 var create = {
@@ -85,6 +86,26 @@ var create = {
     create.newObject(-150, 'prokopenia', actions.handleProkopenia, 5000);
   },
 
+  tractor(key = 'tractor') {
+    if(state.paused) return;
+
+    var x = -300;
+    var y = document.body.getBoundingClientRect().height - 200;
+
+    tractor = context.physics.add.image(x, y, key);
+    
+    setTimeout(() => {
+      context.physics.moveTo(tractor, document.body.getBoundingClientRect().width, y, 800);
+
+      setTimeout(() => {
+        if(state.paused) return;
+        tractor.destroy();
+      }, 5200);
+    }, 5000);
+
+    context.physics.add.overlap(player, tractor, actions.handleTractor, null);
+  },
+
   newObject(yPos = -150, key, handler, interval) {
     setInterval(() => {
       if(state.paused) return;
@@ -102,6 +123,7 @@ var create = {
       }, 5200);
 
       context.physics.add.overlap(player, newGameObj, handler, null, context);
+      context.physics.add.overlap(tractor, newGameObj, actions.destroyByTractor, null, context);
     }, interval);
   },
 }
