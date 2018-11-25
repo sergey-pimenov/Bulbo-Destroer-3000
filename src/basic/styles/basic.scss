@@ -21,9 +21,6 @@ $content-font: -apple-system,
 
 // Colors
 $basicColor: white;
-$brandColor: #2f3542;
-$yColor: #70a1ff;
-$xColor: #ffa502;
 
 * {
   margin: 0;
@@ -82,4 +79,13 @@ body {
 
 .app {
   display: flex;
+}
+
+.linkToGithub {
+  padding: 11px;
+  background-color: rgba(white, 0.7);
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 2;
 }
