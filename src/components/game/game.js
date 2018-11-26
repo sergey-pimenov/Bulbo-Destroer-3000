@@ -25,17 +25,19 @@ export default function() {
 
   window.game = new Phaser.Game(config);
 
-  create.popatos();
-  create.soloduhas();
-  create.vodka();
-
   setTimeout(() => {
-    create.tractor();
+    create.popatos();
+    create.soloduhas();
+    create.vodka();
 
-    setInterval(() => {
+    setTimeout(() => {
       create.tractor();
-    }, 12000);
-  }, 450);
+
+      setInterval(() => {
+        create.tractor();
+      }, 12000);
+    }, 450);
+  }, 200);
 
   setTimeout(create.prokopenias, 1500);
 
