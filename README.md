@@ -4,7 +4,7 @@
 
 ---
 
-# Sorry for govnocode
+# Yesterday it worked
 
 Small browser game for [WTH 2018](http://wth.by)
 
