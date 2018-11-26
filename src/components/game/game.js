@@ -37,7 +37,7 @@ export default function() {
         create.tractor();
       }, 12000);
     }, 450);
-  }, 200);
+  }, 500);
 
   setTimeout(create.prokopenias, 1500);
 
