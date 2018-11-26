@@ -87,7 +87,7 @@ var create = {
   },
 
   tractor(key = 'tractor') {
-    if(state.paused) return;
+    if(state.paused || !context) return;
 
     var x = -300;
     var y = document.body.getBoundingClientRect().height - 200;

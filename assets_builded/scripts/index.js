@@ -337,7 +337,7 @@ exports.default = function () {
         _create2.default.tractor();
       }, 12000);
     }, 450);
-  }, 200);
+  }, 500);
 
   setTimeout(_create2.default.prokopenias, 1500);
 
@@ -649,7 +649,7 @@ var create = (_create = {
 }(function () {
   var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'tractor';
 
-  if (_state2.default.paused) return;
+  if (_state2.default.paused || !context) return;
 
   var x = -300;
   var y = document.body.getBoundingClientRect().height - 200;
